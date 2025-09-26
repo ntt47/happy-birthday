@@ -1,300 +1,111 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Happy Birthday 🎉</title>
+  <meta charset="UTF-8">
+  <title>🎉 Happy Birthday 🎂</title>
   <style>
-    :root{
-      --bg:#0f1724;
-      --card:#0b1220;
-      --accent:#ffb86b;
-      --accent2:#ff6b9f;
-      --text:#f8fafc;
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      overflow: hidden;
     }
-    html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;}
-    body{
-      background: radial-gradient(1200px 600px at 10% 10%, rgba(255,107,159,0.06), transparent),
-                  radial-gradient(1000px 500px at 90% 90%, rgba(255,184,107,0.04), transparent),
-                  var(--bg);
-      color:var(--text);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      overflow:hidden;
+    h1 {
+      font-size: 4rem;
+      color: #fff;
+      text-shadow: 2px 2px 10px #ff6a88, 2px 2px 20px #ff99ac;
+      animation: glow 2s infinite alternate;
     }
-
-    .card{
-      width: min(920px, 94%);
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border-radius:18px;
-      padding:36px;
-      box-shadow: 0 10px 40px rgba(2,6,23,0.7), inset 0 1px 0 rgba(255,255,255,0.02);
-      position:relative;
-      text-align:center;
+    p {
+      font-size: 1.5rem;
+      color: #fff;
+      margin-top: 10px;
+      animation: fadeIn 3s ease-in-out;
     }
-
-    h1{
-      font-size: clamp(28px, 4vw, 56px);
-      margin:0 0 8px;
-      letter-spacing:1px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:12px;
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #ff6a88, 0 0 20px #ff99ac; }
+      to   { text-shadow: 0 0 20px #ff6a88, 0 0 40px #ff99ac; }
     }
-
-    .cake{
-      width:64px;height:64px;border-radius:12px;
-      background:linear-gradient(180deg,#fff 0%, #ffd6e0 100%);
-      display:inline-grid;place-items:center;
-      box-shadow:0 6px 20px rgba(250,100,150,0.12);
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-
-    .subtitle{
-      color: #cbd5e1;
-      margin-bottom:18px;
-      font-size:16px;
+    canvas {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
     }
-
-    .controls{
-      display:flex;
-      gap:12px;
-      justify-content:center;
-      margin-top:18px;
-    }
-
-    .btn{
-      appearance:none;border:0;padding:10px 16px;border-radius:10px;
-      background: linear-gradient(90deg,var(--accent),var(--accent2));
-      color:#0b1220;font-weight:600;cursor:pointer;
-      box-shadow:0 6px 18px rgba(255,107,159,0.18);
-      transition:transform .12s ease, filter .12s;
-    }
-    .btn:active{transform:translateY(1px) scale(.998);}
-    .btn.secondary{
-      background:transparent;border:1px solid rgba(255,255,255,0.06);color:#e6eef8;
-      box-shadow:none;
-    }
-
-    .message{
-      margin-top:18px;color:#e6eef8;font-size:18px;
-    }
-
-    /* confetti canvas full */
-    canvas.confetti{
-      position:fixed;left:0;top:0;right:0;bottom:0;pointer-events:none;z-index:5;
-    }
-
-    /* small sparkle animation under text */
-    .sparkle {
-      width:8px;height:8px;border-radius:50%;
-      background: radial-gradient(circle at 30% 30%, #fff, #ffd6e0 40%, transparent 60%);
-      filter: blur(.4px);
-      box-shadow: 0 0 10px rgba(255,200,200,0.6);
-      animation: float 2s linear infinite;
-      display:inline-block;
-      margin-left:6px;
-      vertical-align:middle;
-    }
-    @keyframes float {
-      0%{transform:translateY(0) scale(1)}
-      50%{transform:translateY(-6px) scale(1.15)}
-      100%{transform:translateY(0) scale(1)}
-    }
-
-    footer{margin-top:18px;color:#8b98a6;font-size:13px}
   </style>
 </head>
 <body>
-  <canvas class="confetti" id="confetti"></canvas>
-
-  <div class="card" role="main">
-    <h1>
-      <div class="cake" aria-hidden>🎂</div>
-      <span id="titleText">Happy Birthday!</span>
-      <span class="sparkle" aria-hidden></span>
-    </h1>
-    <div class="subtitle" id="subtitle">Wishing you a wonderful day 🎈</div>
-
-    <div class="controls">
-      <button class="btn" id="playBtn">Play 🎵</button>
-      <button class="btn secondary" id="stopBtn">Stop ✋</button>
-      <button class="btn secondary" id="shareBtn">Get Link (how-to)</button>
-    </div>
-
-    <div class="message" id="message">Click Play to start the music & confetti.</div>
-
-    <footer>Made with ❤️ — Open this page on desktop or mobile. Audio starts after you click Play (browser autoplay policy).</footer>
-  </div>
+  <canvas id="fireworks"></canvas>
+  <h1>🎉 Happy Birthday 🎂</h1>
+  <p>Chúc bạn một ngày thật tuyệt vời! 🥳</p>
 
   <script>
-  // ---------- confetti (lightweight) ----------
-  (function(){
-    const c = document.getElementById('confetti');
-    const ctx = c.getContext('2d');
-    let w = c.width = window.innerWidth;
-    let h = c.height = window.innerHeight;
-    window.addEventListener('resize', ()=>{ w = c.width = innerWidth; h = c.height = innerHeight; });
+    const canvas = document.getElementById("fireworks");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
-    const pieces = [];
-    function random(min, max){ return Math.random()*(max-min)+min; }
-    const colors = ['#ff6b9f','#ffd86b','#6be4ff','#9d6bff','#7ef58a'];
-
-    function spawn(n=80){
-      for(let i=0;i<n;i++){
-        pieces.push({
-          x: random(0,w),
-          y: random(-h,0),
-          size: random(6,14),
-          vx: random(-0.6,0.6),
-          vy: random(1,4),
-          rot: random(0,360),
-          vr: random(-7,7),
-          color: colors[Math.floor(Math.random()*colors.length)],
-          life: random(220,420)
-        });
+    class Firework {
+      constructor(x, y, color) {
+        this.x = x;
+        this.y = y;
+        this.color = color;
+        this.radius = Math.random() * 3 + 2;
+        this.vx = (Math.random() - 0.5) * 6;
+        this.vy = (Math.random() - 0.5) * 6;
+        this.alpha = 1;
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        this.alpha -= 0.02;
+      }
+      draw() {
+        ctx.globalAlpha = this.alpha;
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fill();
       }
     }
 
-    function render(){
-      ctx.clearRect(0,0,w,h);
-      for(let i=pieces.length-1;i>=0;i--){
-        const p = pieces[i];
-        p.x += p.vx;
-        p.y += p.vy;
-        p.vy += 0.02;
-        p.rot += p.vr;
-        p.life--;
-        ctx.save();
-        ctx.translate(p.x,p.y);
-        ctx.rotate(p.rot*Math.PI/180);
-        ctx.fillStyle = p.color;
-        ctx.fillRect(-p.size/2,-p.size/2,p.size,p.size*0.6);
-        ctx.restore();
-        if(p.y>h+50 || p.life<=0) pieces.splice(i,1);
+    let fireworks = [];
+    function createFireworks() {
+      const x = Math.random() * canvas.width;
+      const y = Math.random() * canvas.height / 2;
+      const colors = ["#ff4b5c", "#ffb400", "#00c9a7", "#3c40c6", "#ff7f50"];
+      for (let i = 0; i < 30; i++) {
+        fireworks.push(new Firework(x, y, colors[Math.floor(Math.random() * colors.length)]));
       }
-      requestAnimationFrame(render);
-    }
-    render();
-
-    window.__confetti = { spawn };
-  })();
-
-  // ---------- simple Happy Birthday melody (approx) ----------
-  // sequence: [frequency, duration(ms)]
-  // This is a simple rendition (approx) using Western scale; uses A440 tuning.
-  (function(){
-    const doc = document;
-    let audioCtx = null;
-    let playing = false;
-    let currentOscillators = [];
-    const playBtn = doc.getElementById('playBtn');
-    const stopBtn = doc.getElementById('stopBtn');
-    const message = doc.getElementById('message');
-
-    // notes map (A4 = 440)
-    const noteFreq = (function(){
-      const base = 440; // A4
-      const semitone = Math.pow(2,1/12);
-      const notes = {};
-      // fill C4..B5 roughly
-      const names = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
-      // find index of A4 -> octave4 note index 9 (A)
-      for(let octave=0; octave<=7; octave++){
-        for(let i=0;i<12;i++){
-          const name = names[i]+octave;
-          const n = (octave-4)*12 + (i-9); // semitone offset from A4
-          notes[name] = base * Math.pow(semitone, n);
-        }
-      }
-      return notes;
-    })();
-
-    // approximate "Happy Birthday" in notes (melody)
-    const melody = [
-      ['G4', 350], ['G4', 150], ['A4', 500], ['G4', 500], ['C5', 500], ['B4', 900],
-      ['G4', 350], ['G4', 150], ['A4', 500], ['G4', 500], ['D5', 500], ['C5', 900],
-      ['G4', 350], ['G4', 150], ['G5', 500], ['E5', 500], ['C5', 500], ['B4', 500], ['A4', 900],
-      ['F5', 350], ['F5', 150], ['E5', 500], ['C5', 500], ['D5', 500], ['C5', 900]
-    ];
-
-    function startAudio(){
-      if(playing) return;
-      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      playing = true;
-      message.textContent = 'Playing Happy Birthday 🎶 (confetti too!)';
-      window.__confetti.spawn(90);
-      playSequence(melody).then(()=> {
-        playing = false;
-        message.textContent = 'Finished — click Play to replay.';
-      }).catch(()=> { playing = false; message.textContent = 'Stopped.'; });
     }
 
-    function stopAudio(){
-      currentOscillators.forEach(osc=>{ try{ osc.osc.stop(); }catch(e){} if(osc.g) osc.g.disconnect(); });
-      currentOscillators = [];
-      playing = false;
-      message.textContent = 'Stopped.';
-    }
-
-    function playNote(name, duration, timeOffset=0){
-      return new Promise((resolve)=>{
-        if(!audioCtx){ resolve(); return; }
-        const now = audioCtx.currentTime + timeOffset;
-        const osc = audioCtx.createOscillator();
-        const g = audioCtx.createGain();
-        osc.type = 'sine';
-        osc.frequency.value = noteFreq[name] || 440;
-        g.gain.value = 0;
-        osc.connect(g);
-        g.connect(audioCtx.destination);
-
-        // envelope
-        const attack = 0.01, release = 0.3;
-        g.gain.setValueAtTime(0, now);
-        g.gain.linearRampToValueAtTime(0.14, now + attack);
-        g.gain.setValueAtTime(0.12, now + attack + (duration/1000)*0.85);
-        g.gain.linearRampToValueAtTime(0, now + attack + (duration/1000) + release);
-
-        osc.start(now);
-        osc.stop(now + (duration/1000) + release);
-
-        currentOscillators.push({osc,g});
-        setTimeout(()=> resolve(), duration + (release*1000));
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      fireworks.forEach((f, i) => {
+        f.update();
+        f.draw();
+        if (f.alpha <= 0) fireworks.splice(i, 1);
       });
+      requestAnimationFrame(animate);
     }
 
-    async function playSequence(seq){
-      let t = 0;
-      for(const [n,d] of seq){
-        await playNote(n,d,0);
-      }
-    }
+    setInterval(createFireworks, 700);
+    animate();
 
-    playBtn.addEventListener('click', ()=> {
-      // browser requires user gesture to unlock audio context
-      if (!audioCtx) {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      }
-      // start
-      startAudio();
+    window.addEventListener("resize", () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
     });
-
-    stopBtn.addEventListener('click', ()=> {
-      stopAudio();
-    });
-
-    // share/how-to button
-    document.getElementById('shareBtn').addEventListener('click', ()=> {
-      alert(
-        'Hosting options:\n\n' +
-        '1) GitHub Pages: create a repo, add this index.html, enable Pages → site is live at https://<user>.github.io/<repo>/\n' +
-        '2) GitHub Gist: create a public gist with filename index.html, then use https://raw.githack.com/<gist-id>/raw/index.html to get a public URL.\n' +
-        '3) CodePen / Netlify Drop / Vercel: paste file or drag & drop.\n\nTip: use GitHub Pages or raw.githack for a single HTML file.'
-      );
-    });
-  })();
   </script>
 </body>
 </html>
